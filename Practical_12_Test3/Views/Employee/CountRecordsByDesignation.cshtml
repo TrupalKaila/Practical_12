@@ -1,0 +1,36 @@
+﻿@model IEnumerable<Practical_12_Test3.Models.DesignationEmployeeCount>
+
+@{
+    ViewBag.Title = "CountRecordsByDesignation";
+    Layout = null;
+}
+
+<h2>Number Of Records by Designation Name</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.DesignationName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EmployeeCount)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.DesignationName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmployeeCount)
+            </td>
+        </tr>
+    }
+
+</table>
+
+<br />
+@Html.ActionLink("Go Back", "Index")

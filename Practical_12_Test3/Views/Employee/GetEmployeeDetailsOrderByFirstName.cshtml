@@ -1,0 +1,57 @@
+﻿@model List<Practical_12_Test3.Models.EmployeeDetailsView>
+
+@{
+    ViewBag.Title = "Get Employee Details By Designation";
+    Layout = null;
+}
+
+<h2>Get Employee Details by Designation Id</h2>
+
+<!-- Input Form -->
+<form method="post" action="/Employee/GetEmployeeDetailsOrderByFirstName">
+
+    <label for="designationId">Enter Designation Id:</label>
+    <input type="number" name="designationId" required min="1" />
+
+    <button type="submit">Search</button>
+</form>
+
+<hr />
+
+<!-- Display Records Only If Model is Not Null -->
+@if (Model != null && Model.Count > 0)
+{
+    <h3>Employee List Ordered by First Name</h3>
+
+    <table border="1" cellpadding="6">
+        <tr>
+            <th>Employee Id</th>
+            <th>First Name</th>
+            <th>Middle Name</th>
+            <th>Last Name</th>
+            <th>DOB</th>
+            <th>Mobile Number</th>
+            <th>Address</th>
+            <th>Salary</th>
+        </tr>
+
+        @foreach (var emp in Model)
+        {
+            <tr>
+                <td>@emp.Id</td>
+                <td>@emp.FirstName</td>
+                <td>@(string.IsNullOrEmpty(emp.MiddleName) ? "N/A" : emp.MiddleName)</td>
+                <td>@emp.LastName</td>
+                <td>@emp.DOB.ToShortDateString()</td>
+                <td>@emp.MobileNumber</td>
+                <td>@(string.IsNullOrEmpty(emp.Address) ? "N/A" : emp.Address)</td>
+                <td>@emp.Salary</td>
+            </tr>
+        }
+    </table>
+}
+else if (Model != null)
+{
+    <p>No employees found for this designation.</p>
+}
+@Html.ActionLink("Go Back", "Index")

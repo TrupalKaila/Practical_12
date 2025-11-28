@@ -1,0 +1,90 @@
+﻿@model List<Practical_12_Test3.Models.EmployeeDetailsView>
+
+@{
+    ViewBag.Title = "Employee Operations - Main Menu";
+    Layout = null;
+}
+
+
+<h2>Employee Operations</h2>
+
+<ul>
+
+    <li>@Html.ActionLink("1. Count Records by Designation", "CountRecordsByDesignation", "Employee")</li>
+    <br />
+
+    <li>@Html.ActionLink("2. Display Employee Details (First, Middle, Last, Designation)", "EmployeeDetails", "Employee")</li>
+    <br />
+
+    <li>@Html.ActionLink("3. View Employee Details Using DB View", "EmployeeDetailsView", "Employee")</li>
+    <br />
+
+    <li>@Html.ActionLink("4. Add New Designation", "AddDesignation", "Employee")</li>
+    <br />
+
+    <li>@Html.ActionLink("5. Add New Employee", "AddEmployee", "Employee")</li>
+    <br />
+
+    <li>@Html.ActionLink("6. Designations Having More Than 1 Employee", "CountEmployeeByDesignationGreaterThanOne", "Employee")</li>
+    <br />
+
+    <li>@Html.ActionLink("7. Employees Ordered By DOB (Via Stored Procedure)", "GetEmployeeDetailsOrderByDOB", "Employee")</li>
+    <br />
+
+    <li>@Html.ActionLink("8. Get Employees By Designation (Order by First Name)", "GetEmployeeDetailsOrderByFirstName", "Employee")</li>
+    <br />
+
+    <li>@Html.ActionLink("9. Employee(s) Having Maximum Salary", "GetEmployeeWithMaximumSalary", "Employee")</li>
+    <br />
+
+</ul>
+
+<hr />
+
+<p>Select an operation from above to continue.</p>
+
+<h3>All Employees</h3>
+
+@if (Model != null && Model.Count > 0)
+{
+    <table border="1" cellpadding="6">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Full Name</th>
+                <th>Designation</th>
+                <th>DOB</th>
+                <th>Mobile</th>
+                <th>Address</th>
+                <th>Salary</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var emp in Model)
+            {
+                <tr>
+                    <td>@emp.Id</td>
+                    <td>@emp.FirstName @emp.MiddleName @emp.LastName</td>
+                    <td>@emp.DesignationName</td>
+                    <td>@emp.DOB.ToString("dd-MM-yyyy")</td>
+                    <td>@emp.MobileNumber</td>
+                    @if (emp.Address.IsEmpty())
+                    {
+                        <td>N/A</td>
+                    }
+                    else
+                    {
+                        <td>
+                            @Html.DisplayFor(modelItem => emp.Address)
+                        </td>
+                    }
+                    <td>@emp.Salary</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No employee records found.</p>
+}

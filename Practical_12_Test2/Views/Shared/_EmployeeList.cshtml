@@ -1,0 +1,35 @@
+﻿@model List<Practical_12_Test2.Models.Employee>
+
+@if (Model == null || Model.Count == 0)
+{
+    <p>No Records Found.</p>
+}
+else
+{
+    <table border="1" cellpadding="6">
+        <tr>
+            <th>Id</th>
+            <th>First</th>
+            <th>Middle</th>
+            <th>Last</th>
+            <th>DOB</th>
+            <th>Mobile</th>
+            <th>Address</th>
+            <th>Salary</th>
+        </tr>
+
+        @foreach (var emp in Model)
+        {
+            <tr>
+                <td>@emp.Id</td>
+                <td>@emp.FirstName</td>
+                <td>@(string.IsNullOrEmpty(emp.MiddleName) ? "N/A" : emp.MiddleName)</td>
+                <td>@emp.LastName</td>
+                <td>@emp.DOB.ToShortDateString()</td>
+                <td>@emp.MobileNumber</td>
+                <td>@emp.Address</td>
+                <td>@emp.Salary</td>
+            </tr>
+        }
+    </table>
+}

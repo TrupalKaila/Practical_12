@@ -1,0 +1,78 @@
+﻿@model List<Practical_12_Test1.Models.Employee>
+
+@{
+    ViewBag.Title = "Employee Operations";
+    Layout = null;
+}
+
+<h2>Employee Operations</h2>
+
+<ul>
+    <li>@Html.ActionLink("Add New Employee", "AddEmployee", "Employee")</li>
+    <br />
+
+    <li>@Html.ActionLink("Insert Testing Records", "AddTestingRecords", "Employee")</li>
+    <br />
+
+    <li>@Html.ActionLink("Update First Name for First Record", "UpdateFirstNameForSingleRecord", "Employee")</li>
+    <br />
+
+    <li>@Html.ActionLink("Update Middle Name for All Records", "UpdateMiddleNameForAll", "Employee")</li>
+    <br />
+
+    <li>@Html.ActionLink("Delete First Record", "DeleteRecord", "Employee")</li>
+    <br />
+
+    <li>@Html.ActionLink("Delete All Records", "DeleteAllRecords", "Employee")</li>
+    <br />
+</ul>
+
+<hr />
+
+<h2>All Employees</h2>
+
+@if (Model != null && Model.Count > 0)
+{
+    <table border="1" cellpadding="6">
+        <tr>
+            <th>Id</th>
+            <th>First Name</th>
+            <th>Middle Name</th>
+            <th>Last Name</th>
+            <th>DOB</th>
+            <th>Mobile</th>
+            <th>Address</th>
+        </tr>
+
+        @foreach (var emp in Model)
+        {
+            <tr>
+                <td>@emp.Id</td>
+                <td>@emp.FirstName</td>
+                @if (emp.MiddleName.IsEmpty())
+                {
+                    <td>N/A</td>
+                }
+                else
+                {
+                    <td>@emp.MiddleName</td>
+                }
+                <td>@emp.LastName</td>
+                <td>@emp.DOB.ToShortDateString()</td>
+                <td>@emp.MobileNumber</td>
+                @if (emp.Address.IsEmpty())
+                {
+                    <td>Null</td>
+                }
+                else
+                {
+                    <td>@emp.Address</td>
+                }
+            </tr>
+        }
+    </table>
+}
+else
+{
+    <p>No employees found.</p>
+}

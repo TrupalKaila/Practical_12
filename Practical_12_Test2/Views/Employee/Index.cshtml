@@ -1,0 +1,85 @@
+﻿@model List<Practical_12_Test2.Models.Employee>
+
+@{
+    ViewBag.Title = "Employee Operations";
+    Layout = null;
+}
+
+<h2>Employee Operations</h2>
+
+<ul>
+
+
+    <li>@Html.ActionLink("Insert Records", "AddTestingRecords", "Employee")</li>
+    <br />
+
+    <li>@Html.ActionLink("Total Salary of All Employees", "TotalSalary", "Employee")</li>
+    <br />
+
+    <li>@Html.ActionLink("Employees having DOB less than 01-01-2000", "EmployeesBornBefore2000", "Employee")</li>
+    <br />
+
+    <li>@Html.ActionLink("Employees having Middle Name Null", "CountMiddleNameNull", "Employee")</li>
+    <br />
+</ul>
+
+<hr />
+
+<h2>All Employees</h2>
+
+@if (Model != null && Model.Count > 0)
+{
+    <table border="1" cellpadding="6">
+        <tr>
+            <th>Id</th>
+            <th>First Name</th>
+            <th>Middle Name</th>
+            <th>Last Name</th>
+            <th>DOB</th>
+            <th>Mobile</th>
+            <th>Address</th>
+            <th>Salary</th>
+        </tr>
+
+        @foreach (var emp in Model)
+        {
+            <tr>
+                <td>@emp.Id</td>
+                <td>@emp.FirstName</td>
+                @if (emp.MiddleName.IsEmpty())
+                {
+                    <td>N/A</td>
+                }
+                else
+                {
+                    <td>@emp.MiddleName</td>
+                }
+                <td>@emp.LastName</td>
+                <td>@emp.DOB.ToShortDateString()</td>
+                <td>@emp.MobileNumber</td>
+                @if (emp.Address.IsEmpty())
+                {
+                    <td>Null</td>
+                }
+                else
+                {
+                    <td>@emp.Address</td>
+                }
+                <td>@emp.Salary</td>
+
+            </tr>
+        }
+    </table>
+}
+else
+{
+    <p>No employees found.</p>
+}
+@if (ViewBag.TotalSalary != null)
+{
+    <h3>Total Salary of All Employees: <b>@ViewBag.TotalSalary</b></h3>
+}
+@if (ViewBag.EmpCount != null)
+{
+    <h3>Employee Count Having Middle Name NULL: <b>@ViewBag.EmpCount</b></h3>
+}
