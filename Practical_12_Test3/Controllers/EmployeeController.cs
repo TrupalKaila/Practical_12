@@ -121,16 +121,24 @@ namespace Practical_12_Test3.Controllers
         [HttpPost]
         public ActionResult AddDesignation(string designationName)
         {
+            if (string.IsNullOrWhiteSpace(designationName))
+            {
+                ViewBag.Error = "Designation name cannot be empty.";
+                return View();
+            }
+
             using (SqlConnection con = new SqlConnection(conString))
             {
                 SqlCommand cmd = new SqlCommand("sp_InsertDesignation", con);
                 cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@Designation", designationName);
+                cmd.Parameters.AddWithValue("@Designation", designationName.Trim());
                 con.Open();
                 cmd.ExecuteNonQuery();
             }
+
             return RedirectToAction("Index");
         }
+
         //Create a stored procedure to insert data into the Employee table with required parameters 
         public ActionResult AddEmployee()
         {

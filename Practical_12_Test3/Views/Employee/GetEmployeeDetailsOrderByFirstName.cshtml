@@ -5,53 +5,93 @@
     Layout = null;
 }
 
-<h2>Get Employee Details by Designation Id</h2>
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-3.7.1.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
 
-<!-- Input Form -->
-<form method="post" action="/Employee/GetEmployeeDetailsOrderByFirstName">
+<div class="container mt-4">
 
-    <label for="designationId">Enter Designation Id:</label>
-    <input type="number" name="designationId" required min="1" />
+    <div class="text-center mb-4">
+        <h2 class="fw-bold text-primary">Get Employee Details by Designation</h2>
+        <p class="text-muted">Search employees by entering a Designation ID</p>
+    </div>
 
-    <button type="submit">Search</button>
-</form>
+    <!-- Input Form -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-primary text-white fw-bold">
+            Search Form
+        </div>
 
-<hr />
+        <div class="card-body">
+            <form method="post" action="/Employee/GetEmployeeDetailsOrderByFirstName">
+                <div class="row align-items-end">
 
-<!-- Display Records Only If Model is Not Null -->
-@if (Model != null && Model.Count > 0)
-{
-    <h3>Employee List Ordered by First Name</h3>
+                    <div class="col-md-6 mb-3">
+                        <label for="designationId" class="form-label fw-bold">Enter Designation ID</label>
+                        <input type="number" name="designationId" class="form-control" required min="1" placeholder="e.g., 1, 2, 3" />
+                    </div>
 
-    <table border="1" cellpadding="6">
-        <tr>
-            <th>Employee Id</th>
-            <th>First Name</th>
-            <th>Middle Name</th>
-            <th>Last Name</th>
-            <th>DOB</th>
-            <th>Mobile Number</th>
-            <th>Address</th>
-            <th>Salary</th>
-        </tr>
+                    <div class="col-md-4 mb-3">
+                        <button type="submit" class="btn btn-success w-100">Search</button>
+                    </div>
 
-        @foreach (var emp in Model)
-        {
-            <tr>
-                <td>@emp.Id</td>
-                <td>@emp.FirstName</td>
-                <td>@(string.IsNullOrEmpty(emp.MiddleName) ? "N/A" : emp.MiddleName)</td>
-                <td>@emp.LastName</td>
-                <td>@emp.DOB.ToShortDateString()</td>
-                <td>@emp.MobileNumber</td>
-                <td>@(string.IsNullOrEmpty(emp.Address) ? "N/A" : emp.Address)</td>
-                <td>@emp.Salary</td>
-            </tr>
-        }
-    </table>
-}
-else if (Model != null)
-{
-    <p>No employees found for this designation.</p>
-}
-@Html.ActionLink("Go Back", "Index")
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Display Records -->
+    @if (Model != null && Model.Count > 0)
+    {
+        <h3 class="text-center text-success mb-3">Employee List (Ordered by First Name)</h3>
+
+        <div class="card shadow-sm">
+            <div class="card-header bg-dark text-white fw-bold">
+                Employees Found
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover table-striped mb-0">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Employee Id</th>
+                            <th>First Name</th>
+                            <th>Middle Name</th>
+                            <th>Last Name</th>
+                            <th>DOB</th>
+                            <th>Mobile Number</th>
+                            <th>Address</th>
+                            <th>Salary</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var emp in Model)
+                        {
+                            <tr>
+                                <td>@emp.Id</td>
+                                <td>@emp.FirstName</td>
+                                <td>@(string.IsNullOrEmpty(emp.MiddleName) ? "N/A" : emp.MiddleName)</td>
+                                <td>@emp.LastName</td>
+                                <td>@emp.DOB.ToString("dd-MM-yyyy")</td>
+                                <td>@emp.MobileNumber</td>
+                                <td>@(string.IsNullOrEmpty(emp.Address) ? "N/A" : emp.Address)</td>
+                                <td>@emp.Salary</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+    else if (Model != null)
+    {
+        <div class="alert alert-warning mt-3 text-center">
+            No employees found for this designation.
+        </div>
+    }
+
+    <div class="text-center mt-4">
+        @Html.ActionLink("⬅ Go Back", "Index", null, new { @class = "btn btn-secondary px-4" })
+    </div>
+
+</div>

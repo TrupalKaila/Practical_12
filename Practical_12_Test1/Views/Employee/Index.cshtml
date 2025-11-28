@@ -5,74 +5,104 @@
     Layout = null;
 }
 
-<h2>Employee Operations</h2>
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-3.7.1.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
 
-<ul>
-    <li>@Html.ActionLink("Add New Employee", "AddEmployee", "Employee")</li>
-    <br />
+<div class="container mt-4">
 
-    <li>@Html.ActionLink("Insert Testing Records", "AddTestingRecords", "Employee")</li>
-    <br />
+    <!-- PAGE TITLE -->
+    <div class="text-center mb-4">
+        <h2 class="fw-bold text-primary">Employee Operations</h2>
+        <p class="text-muted">Perform operations or view all employee records below</p>
+    </div>
 
-    <li>@Html.ActionLink("Update First Name for First Record", "UpdateFirstNameForSingleRecord", "Employee")</li>
-    <br />
+    <!-- OPERATION MENU -->
+    <div class="row justify-content-center mb-4">
+        <div class="col-md-8">
 
-    <li>@Html.ActionLink("Update Middle Name for All Records", "UpdateMiddleNameForAll", "Employee")</li>
-    <br />
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white fw-bold">
+                    Available Operations
+                </div>
 
-    <li>@Html.ActionLink("Delete First Record", "DeleteRecord", "Employee")</li>
-    <br />
+                <ul class="list-group list-group-flush">
 
-    <li>@Html.ActionLink("Delete All Records", "DeleteAllRecords", "Employee")</li>
-    <br />
-</ul>
+                    <li class="list-group-item">
+                        @Html.ActionLink("Add New Employee", "AddEmployee", "Employee")
+                    </li>
 
-<hr />
+                    <li class="list-group-item">
+                        @Html.ActionLink("Insert Testing Records", "AddTestingRecords", "Employee")
+                    </li>
 
-<h2>All Employees</h2>
+                    <li class="list-group-item">
+                        @Html.ActionLink("Update First Name for First Record", "UpdateFirstNameForSingleRecord", "Employee")
+                    </li>
 
-@if (Model != null && Model.Count > 0)
-{
-    <table border="1" cellpadding="6">
-        <tr>
-            <th>Id</th>
-            <th>First Name</th>
-            <th>Middle Name</th>
-            <th>Last Name</th>
-            <th>DOB</th>
-            <th>Mobile</th>
-            <th>Address</th>
-        </tr>
+                    <li class="list-group-item">
+                        @Html.ActionLink("Update Middle Name for All Records", "UpdateMiddleNameForAll", "Employee")
+                    </li>
 
-        @foreach (var emp in Model)
-        {
-            <tr>
-                <td>@emp.Id</td>
-                <td>@emp.FirstName</td>
-                @if (emp.MiddleName.IsEmpty())
-                {
-                    <td>N/A</td>
-                }
-                else
-                {
-                    <td>@emp.MiddleName</td>
-                }
-                <td>@emp.LastName</td>
-                <td>@emp.DOB.ToShortDateString()</td>
-                <td>@emp.MobileNumber</td>
-                @if (emp.Address.IsEmpty())
-                {
-                    <td>Null</td>
-                }
-                else
-                {
-                    <td>@emp.Address</td>
-                }
-            </tr>
-        }
-    </table>
-}
-else
-{
-    <p>No employees found.</p>
-}
+                    <li class="list-group-item">
+                        @Html.ActionLink("Delete First Record", "DeleteRecord", "Employee")
+                    </li>
+
+                    <li class="list-group-item">
+                        @Html.ActionLink("Delete All Records", "DeleteAllRecords", "Employee")
+                    </li>
+
+                </ul>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- EMPLOYEE TABLE -->
+    <h3 class="text-center text-success mb-3">All Employees</h3>
+
+    @if (Model != null && Model.Count > 0)
+    {
+        <div class="card shadow-sm">
+
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped table-hover mb-0">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Id</th>
+                            <th>First Name</th>
+                            <th>Middle Name</th>
+                            <th>Last Name</th>
+                            <th>DOB</th>
+                            <th>Mobile</th>
+                            <th>Address</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var emp in Model)
+                        {
+                            <tr>
+                                <td>@emp.Id</td>
+                                <td>@emp.FirstName</td>
+                                <td>@(string.IsNullOrEmpty(emp.MiddleName) ? "N/A" : emp.MiddleName)</td>
+                                <td>@emp.LastName</td>
+                                <td>@emp.DOB.ToString("dd-MM-yyyy")</td>
+                                <td>@emp.MobileNumber</td>
+                                <td>@(string.IsNullOrEmpty(emp.Address) ? "Null" : emp.Address)</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-warning text-center fs-5 mt-3">
+            No employees found.
+        </div>
+    }
+
+</div>
